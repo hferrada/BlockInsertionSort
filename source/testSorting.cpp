@@ -57,6 +57,7 @@ int main(int argc, char **argv){
 	if(argc < 4){
 		// -n normal distribution, -med media -std stddev; -f <prefix> save into a file
 		cout << "Execution Error! call: ./tastSort <n> <REPET> <NORMAL_flag> [<stddev>]" << endl;
+		cout << "For instance execute: ./testSort 1000 10 0, to create and sort a random arrays of length 1000" << endl;
 		exit(EXIT_FAILURE);
 	}
 	par.n = atoi(argv[1]);
