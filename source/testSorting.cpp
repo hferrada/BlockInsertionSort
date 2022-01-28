@@ -2,11 +2,11 @@
 // Name        : testSort.cpp
 // Author      : Héctor Ferrada
 // Copyright   : 
-// Description : Code to test the blockInsertionSort Algorithm [1].
+// Description : Code to test the blockInsertionSort Algorithm, [1].
 //
 // Bibliogrphy
-// [1] Ferrada, A Sorting Algorithm Based on Ordered Block Inserts,
-// Journal on computational Sciences, 2022.
+// [1] H. Ferrada, A Sorting Algorithm Based on Ordered Block Inserts,
+// Journal of computational Sciences, 2022.
 //============================================================================
 
 #include <iostream>
