@@ -1,6 +1,6 @@
 # BlockInsertionSort
 This is the source code for the blockInsertionSort algorithm, a comparison-based sorting method that was published by Héctor Ferrada (2022) in the Journal of Computational Sciences.
-The input is an array A, of type <T>, of $n$ cells and the method sorts it in O(n log n) time under the RAM model.
+The input is an array A, of type <T>, of n cells and the method sorts it in O(n log n) time under the RAM model. In our experiments we managed to sort a random array of 10 million cells in less than 1 second, thus improving even the popular std::sort provided by C++ STL.
 
 Author: 
 	Hector Ferrada, Universidad Austral de Chile, hferrada@inf.uach.cl
