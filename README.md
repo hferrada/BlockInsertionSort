@@ -2,7 +2,7 @@
 This is the source code for the blockInsertionSort algorithm, a comparison-based sorting method that was published by Héctor Ferrada (2022) in the Journal of Computational Sciences.
 The input is an array A, of type <T>, of $n$ cells and the method sorts it in O(n log n) time under the RAM model.
 
-Authors: 
+Author: 
 	Hector Ferrada, Universidad Austral de Chile, hferrada@inf.uach.cl
 
 Description:
@@ -18,4 +18,4 @@ References:
 	Please, if you want to include this tool as part of your work/experiments, use the following reference [1].
 
 [1]. Héctor Ferrada. A Sorting Algorithm Based on Ordered Block Inserts,
-Journal on computational Sciences, 2022.
+Journal of computational Sciences, 2022.
