@@ -4,7 +4,7 @@
 // Copyright   : 
 // Description : Code to test the blockInsertionSort Algorithm, [1].
 //
-// Bibliogrphy
+// Bibliography
 // [1] H. Ferrada, A Sorting Algorithm Based on Ordered Block Inserts,
 // Journal of computational Sciences, 2022.
 //============================================================================
