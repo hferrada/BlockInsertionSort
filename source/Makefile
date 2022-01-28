@@ -1,6 +1,6 @@
 CC=g++
 CFLAGS=-Wall -std=c++17 -O3
-BINS=testSort test
+BINS=testSort
 all: clean test
 
 test:
