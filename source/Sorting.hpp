@@ -1,14 +1,17 @@
 /*
  * Sorting.hpp
  *
- *  Created on: 03-09-2021
+ *  Created on: July-2022
  *      Author: Héctor Ferrada
  *
- *  This code provides the templates for the algoritms: mergeSort, insertionSort, 
- *  blockInsertionSort and blockInsertionSortMaxB especified in the paper [1]
- * 
+ *  This code provides the templates for the algoritms: 
+ *     - blockInsertionSort --> appeared in paper [1]
+ *     - blockInsertionSortMaxB --> appeared in paper [1]
+ *     - insertionSort.
+ *     - mergeSort.
+ *  
  * Bibliogrphy
- * [1] Ferrada, A Sorting Algorithm Based on Ordered Block Inserts,
+ * [1] H. Ferrada, A Sorting Algorithm Based on Ordered Block Inserts,
  * Journal on computational Sciences, 2022.
  */
 
@@ -24,7 +27,7 @@ namespace srt{
 
 // DEFAULT CONFIGURATION
 size_t blockIS = 16; 		// block size for blockInsertionSort and  blockInsertionSortMaxB, it must be a power of two
-size_t maxBlockIS = 1048576; 	// Maximum block length for block insertion sort. default: 16^5 = 32^4 = 1048576 = 4 MiB as extra size
+size_t maxBlockIS = 1048576; 	// Maximum block length for block blockInsertionSortMaxB. Default: 16^5 = 32^4 = 1048576 = 4 MiB as extra size
 
 template<typename T>
 void blockInsertionSort(T *A, size_t l, size_t r){
@@ -32,9 +35,7 @@ void blockInsertionSort(T *A, size_t l, size_t r){
 	long int i, j;
 	T key;
 
-	//std::cout << "potBIS = " << potBIS << std::endl;
-
-	// 1- sort Blk_1, Blk_2, ..
+	// 1- sort all small blocks: Blk_1, Blk_2, ..
 	ini=l;
 	end=ini+blockIS;
 	while(ini<=r){
@@ -58,9 +59,9 @@ void blockInsertionSort(T *A, size_t l, size_t r){
 	dt = pow(blockIS,dt);
 	if (dt==n)
 		dt>>=potBIS;
-	T* ArrBI = new T[dt];
-	//std::cout << "len ArrBI = " << dt << std::endl;
+	T* ArrBI = new T[dt];		// extra size
 
+	// We iterate for any segments S[sp...ep] of k blocks, for k in {blockIS, blockIS^2, blockIS^3, ...}
 	bLev = blockIS;
 	while (bLev < n){
 		sp = l;
@@ -75,11 +76,11 @@ void blockInsertionSort(T *A, size_t l, size_t r){
 			}else
 				lenB = bLev;
 
-			// 2- copy Blk_1 of A[sp..ep] in ArrBI
+			// 2- copy the block Blk_2 from A[sp..ep] to ArrBI[]
 			for(pos=ini; pos<end; pos++)
 				ArrBI[pos-ini] = A[pos];
 
-			// 3- insert all sorted blocks from blk_2 to ep in of A[sp..ep]
+			// 3- insert all sorted blocks, from Blk_3 to the last block into A[sp..ep]
 			ini=sp+(bLev<<1);
 			end=ini+bLev;
 			j = sp+bLev-1;
@@ -115,10 +116,10 @@ void blockInsertionSort(T *A, size_t l, size_t r){
 				A[j+dt] = key;
 				dt--;
 			}
-			// A[sp..ep] is sorted
+			// A[sp..ep] is already sorted
 			sp = ep+1;
 		}
-		// to multiply by blockIS for the nest level
+		// to multiply by blockIS for the next level
 		bLev <<= potBIS;
 	}
 	delete [] ArrBI;
@@ -130,7 +131,7 @@ void blockInsertionSortMaxB(T *A, size_t l, size_t r){
 	long int i, j;
 	T key;
 
-	// 1- sort Blk_1, Blk_2, ..
+	// 1- sort all small blocks: Blk_1, Blk_2, ..
 	ini=l;
 	fin=ini+blockIS;
 	while(ini<=r){
@@ -150,23 +151,21 @@ void blockInsertionSortMaxB(T *A, size_t l, size_t r){
 	if (r-l<blockIS)
 		return;
 
-	T* ArrBIB = new T[maxBlockIS];
+	T* ArrBIB = new T[maxBlockIS];		// extra size
 	bLev = blockIS;
+	// We iterate for any segments S[sp...ep] of k blocks, for k in {blockIS, blockIS^2, blockIS^3, ..., maximum-size}
 	while (bLev <= maxBlockIS){
-		//cout << "bLev = " << bLev << endl;
 		sp = l;
 		while(sp<=r){
-			if ((bLev<<potBIS) > maxBlockIS){
+			if ((bLev<<potBIS) > maxBlockIS)
 				ep = r;
-				//cout << "bLev == maxBlockIS ..." << endl;
-				//cout << endl << endl;
-			}else{
+			else{
 				ep = sp + (bLev<<potBIS) -1;
 				if(ep>r)
 					ep=r;
 			}
 
-			// 2- copy Blk_1 of A[sp..ep] in AUX_B
+			// 2- copy the block Blk_2 from A[sp..ep] to ArrBIB[]
 			ini=sp+bLev;
 			fin=ini+bLev;
 			if(fin>ep+1){
@@ -177,7 +176,7 @@ void blockInsertionSortMaxB(T *A, size_t l, size_t r){
 			for(pos=ini; pos<fin; pos++)
 				ArrBIB[pos-ini] = A[pos];
 
-			// 1- insert all sorted blocks from blk_2 to ep in of A[sp..ep] ARREGLAR... PQ TODOS SON CRECIENTES
+			// 3- insert all sorted blocks, from blk_3 to the last block into A[sp..ep]
 			ini=sp+(bLev<<1);
 			fin=ini+bLev;
 			j = sp+bLev-1;
@@ -202,7 +201,7 @@ void blockInsertionSortMaxB(T *A, size_t l, size_t r){
 				fin+=bLev;
 			}
 
-			// Insertar AUX_B (blk_2) en A
+			// 4- Insert ArrBIB (blk_2) in A
 			dt = lenB;
 			j = ep-lenB;
 			for(i=lenB-1; i>=0; i--){
@@ -214,9 +213,10 @@ void blockInsertionSortMaxB(T *A, size_t l, size_t r){
 				A[j+dt] = key;
 				dt--;
 			}
+			// A[sp..ep] is already sorted
 			sp = ep+1;
 		}
-		bLev <<= potBIS;
+		bLev <<= potBIS;	// to multiply by blockIS for the next level
 	}
 	delete [] ArrBIB;
 }
@@ -239,6 +239,7 @@ void insertionSort(T *A, size_t l, size_t r){
 	}
 }
 
+// classic merge rutine
 template<typename T>
 void merge(T *A, size_t l, size_t m, size_t r){
 	size_t i, j, k;
@@ -285,7 +286,7 @@ void merge(T *A, size_t l, size_t m, size_t r){
 }
 
 
-// mergesort algorithm to sort A[l..r]
+// classic mergesort algorithm to sort A[l..r]
 template<typename T>
 void mergeSort(T *A, size_t l, size_t r){
     if(l>=r) return;
