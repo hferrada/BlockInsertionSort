@@ -37,7 +37,7 @@ typedef struct {
 #define PRINT 0
 #define TEST 0
 #define MIN 0
-#define MAX 1000000
+#define MAX 100000000
 
 void testSort(ParProg par);
 void runExpInsertionSort(ParProg par, bool small);
