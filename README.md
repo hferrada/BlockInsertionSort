@@ -15,5 +15,5 @@ Compile:
 References:
 	Please, if you want to include this tool as part of your work/experiments, use the following reference [1].
 
-[1]. Héctor Ferrada. A Sorting Algorithm Based on Ordered Block Inserts,
-Journal of computational Sciences, 2022.
+[1]. Héctor Ferrada. A Sorting Algorithm Based on Ordered Block Insertions.
+To appear in Journal of computational Sciences, 2022.
